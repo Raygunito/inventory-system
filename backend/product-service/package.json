@@ -9,12 +9,14 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "docs": "typedoc src/product.controller.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "pg-promise": "^11.10.2",
     "winston": "^3.17.0"
   },
   "devDependencies": {
@@ -23,6 +25,7 @@
     "@types/node": "^22.13.4",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
+    "typedoc": "^0.27.7",
     "typescript": "^5.7.3"
   }
 }

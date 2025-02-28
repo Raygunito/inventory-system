@@ -12,6 +12,7 @@ WORKDIR /app
 
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist ./dist
+COPY sql ./sql
 
 RUN npm install --omit=dev
 
