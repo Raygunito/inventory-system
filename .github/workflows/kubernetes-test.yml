@@ -23,11 +23,11 @@ jobs:
       - name: Apply Kubernetes Manifests
         run: |
           kubectl apply -f kubernetes/
-          sleep 10
+          sleep 30
 
       - name: Check for Failed Pods
         run: |
-          kubectl get pods -A
+          kubectl get pods -n inventory-system
           if kubectl get pods -A | grep -q 'CrashLoopBackOff\|Error\|ImagePullBackOff'; then
             echo "Some pods failed to start!"
             exit 1
