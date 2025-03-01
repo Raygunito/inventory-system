@@ -1,0 +1,38 @@
+name: Test Kubernetes Manifests
+
+on:
+  - pull_request
+
+jobs:
+  test-k8s:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Start Minikube
+        uses: medyagh/setup-minikube@v0.0.19
+        with:
+          driver: docker
+
+      - name: Validate Kubernetes Manifests (Dry Run)
+        run: |
+          kubectl apply --dry-run=client -f kubernetes/
+
+      - name: Apply Kubernetes Manifests
+        run: |
+          kubectl apply -f kubernetes/
+          sleep 10
+
+      - name: Check for Failed Pods
+        run: |
+          kubectl get pods -A
+          if kubectl get pods -A | grep -q 'CrashLoopBackOff\|Error\|ImagePullBackOff'; then
+            echo "Some pods failed to start!"
+            exit 1
+          fi
+
+      - name: Wait for Pods to be Ready
+        run: |
+          kubectl wait --for=condition=Ready pod --all -A --timeout=60s

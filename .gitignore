@@ -12,3 +12,5 @@ node_modules/
 
 **/docs/
 **/dist/
+
+kubernetes/postgres-secret.yaml
