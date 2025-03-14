@@ -30,7 +30,7 @@ jobs:
             POSTGRES_USER: $(echo -n "${{ secrets.POSTGRES_USER }}" | base64)
             POSTGRES_PASSWORD: $(echo -n "${{ secrets.POSTGRES_PASSWORD }}" | base64)
           EOF
-          
+
           cat <<EOF > kubernetes/auth-secret.yaml
           apiVersion: v1
           kind: Secret
