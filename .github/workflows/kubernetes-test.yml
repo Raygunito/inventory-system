@@ -39,7 +39,7 @@ jobs:
             namespace: inventory-system
           type: Opaque
           data:
-            JWT_SECRET: $(echo -n "${{ secrets.JWT_SECRET }}" | base64)
+            JWT_SECRET: $(echo -n "${{ secrets.JWT_SECRET }}" | base64 -w 0)
           EOF
 
       - name: Validate Kubernetes Manifests (Dry Run)
