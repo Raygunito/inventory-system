@@ -5,7 +5,7 @@ metadata:
   namespace: inventory-system
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 512Mi
@@ -29,9 +29,17 @@ data:
     CREATE TABLE IF NOT EXISTS products (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
-        price NUMERIC(10,2) NOT NULL,
-        stock INT NOT NULL,
+        price NUMERIC(10,2) NOT NULL CHECK (price >= 0),
+        stock INT NOT NULL CHECK (stock >= 0),
         description TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        role VARCHAR(50) NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW()
     );
 
 ---
