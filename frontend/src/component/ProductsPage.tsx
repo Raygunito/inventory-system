@@ -6,9 +6,10 @@ const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("");
-
+  const baseEndpoint = import.meta.env.VITE_ACCOUNT_ENDPOINT ?? "";
+  const endpoint = "api/products";
   useEffect(() => {
-    fetch("http://127.0.0.1/api/products")
+    fetch(baseEndpoint + endpoint)
       .then((response) => {
         if (!response.ok) throw new Error("Failed to fetch products");
         return response.json();
