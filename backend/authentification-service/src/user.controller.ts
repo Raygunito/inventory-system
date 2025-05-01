@@ -1,11 +1,45 @@
 import { Request, Response } from "express";
-import {compare, hash} from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "./db";
 import logger from "./logger";
 import { v4 as uuidv4 } from "uuid";
 
 class UserController {
+    public async changePassword(req: Request, res: Response): Promise<void> {
+        const { oldPassword, newPassword } = req.body;
+        const userId = (req.user as jwt.JwtPayload).id;
+        if (!oldPassword || !newPassword) {
+            res.status(400).json({ message: "Both current and new passwords are required" });
+            return;
+        }
+        try {
+            const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+
+            if (!user) {
+                logger.warn(`Change password failed: User with ID ${userId} not found.`);
+                res.status(404).json({ message: "User not found" });
+                return;
+            }
+
+            const passwordMatch = await compare(oldPassword, user.password);
+
+            if (!passwordMatch) {
+                logger.warn(`Change password failed: Incorrect old password for user ${userId}.`);
+                res.status(401).json({ message: "Incorrect old password" });
+                return;
+            }
+
+            const hashedPassword = await hash(newPassword, 10);
+            await db.none('UPDATE users SET password = $1 WHERE id = $2', [hashedPassword, userId]);
+            logger.info(`Password changed successfully for user ${userId}.`);
+            res.status(200).json({ message: "Password changed successfully" });
+        } catch (error) {
+            logger.error("Error changing password", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+
+    }
     public async login(req: Request, res: Response): Promise<void> {
         const { username, password } = req.body;
 
@@ -33,7 +67,7 @@ class UserController {
                 return;
             }
 
-            const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: "1h" });
+            const token = jwt.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
             logger.info(`Login successful for user ${username}. Token generated.`);
             res.status(200).json({ token });
         } catch (error) {
@@ -90,7 +124,7 @@ class UserController {
                 return;
             }
             logger.info(`Fetched user list for dashboard.`);
-            res.status(200).json({ message: "Welcome to your dashboard", users });
+            res.status(200).json({ users, username: user.username, role: user.role });
         } catch (error) {
             logger.error("Error fetching user dashboard", error);
             res.status(500).json({ message: "Internal server error" });

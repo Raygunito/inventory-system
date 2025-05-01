@@ -8,8 +8,6 @@ authRoutes.post('/login', UserController.login);
 
 authRoutes.post('/register', UserController.register);
 
-authRoutes.post('/logout', UserController.logout);
-
 authRoutes.get("/dashboard", authMiddleware.authenticateToken, UserController.dashboard);
 
 
