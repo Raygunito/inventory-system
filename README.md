@@ -6,4 +6,5 @@ This project is an inventory management system for a store, built using a micros
 ## Configuration
 
 1. In the folder `template`, use the `postgres-secret-template.yaml` template to create the postgres secrets.
-2. Apply all the kubernetes files with `kubectl apply -f kubernetes/`
+2. Do the same thing for the `auth-secret-template.yaml` template for the JWT Token
+3. Apply all the kubernetes files with `kubectl apply -f kubernetes/`

@@ -3,5 +3,19 @@
 
 @theme {
   --font-montserrat: 'Montserrat', Verdana , sans-serif;
+  --color-background: #1A1A1A;
+  --color-text: #F9F6EE;
+  --color-primary: #6E81B9;
+  --color-secondary: #B9A66E;
+}
 
+body {
+  background-color: #1A1A1A ;
+  color: #F9F6EE;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 80vh;
 }
