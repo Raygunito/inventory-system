@@ -69,10 +69,10 @@ const AccountPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-background text-text rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-text mb-4">
+    <main className="max-w-md mx-auto p-6 bg-background text-text rounded-lg shadow-md">
+      <h1 className="text-2xl font-semibold text-text mb-4">
         {isLogin ? "Login" : "Register"}
-      </h2>
+      </h1>
 
       <button
         className="text-sm text-primary underline hover:text-secondary transition-colors duration-200 cursor-pointer"
@@ -136,7 +136,7 @@ const AccountPage = () => {
           {loading ? "Processing..." : isLogin ? "Login" : "Register"}
         </button>
       </form>
-    </div>
+    </main>
   );
 };
 

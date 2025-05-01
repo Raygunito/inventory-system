@@ -28,7 +28,7 @@ const Header = () => {
               </Link>
               <button
                 onClick={logout}
-                className="text-text hover:text-red-500 transition"
+                className="text-text hover:text-secondary transition cursor-pointer"
               >
                 Logout
               </button>
