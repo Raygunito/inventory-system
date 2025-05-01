@@ -4,8 +4,8 @@ import authMiddleware from "./auth.middleware";
 
 const userRoutes = express.Router();
 
-userRoutes.put("/user/updateRole", authMiddleware.authenticateToken, authMiddleware.authorizeAdmin, UserController.updateRole);
-
-userRoutes.delete("/user/delete", authMiddleware.authenticateToken, authMiddleware.authorizeAdmin, UserController.deleteUser);
+userRoutes.put("/updateRole", authMiddleware.authenticateToken, authMiddleware.authorizeAdmin, UserController.updateRole);
+userRoutes.put("/changePassword", authMiddleware.authenticateToken, UserController.changePassword);
+userRoutes.delete("/delete", authMiddleware.authenticateToken, authMiddleware.authorizeAdmin, UserController.deleteUser);
 
 export default userRoutes;
