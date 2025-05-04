@@ -79,3 +79,5 @@ Visit the URL shown under ADDRESS from the Ingress (http://\<ip-or-hostname\>/) 
 - Kubernetes runs locally using Minikube with the Docker driver.
 - NGINX is used for ingress routing.
 - The frontend is accessible via the configured ingress route.
+- 2 k8S RBAC roles are defined : `admin-role` and `devops-role`
+- 2 service accounts are created : `admin` and `devops`, to try a command as one of the roles, do `kubectl get pods -n inventory-system --as=admin`
