@@ -74,6 +74,7 @@ minikube tunnel
 ### 3. Open in Browser:
 Open in Browser:
 Visit the URL shown under ADDRESS from the Ingress (http://\<ip-or-hostname\>/) to access the app. `/` will go to the frontend, `/api/products` let you talk with the API backend.
+In case you need the documentation : `cd backend/product-service` then `npm install` then `npm run docs`, the docs folder contains the documentation
 
 ## Additional information
 - Kubernetes runs locally using Minikube with the Docker driver.
